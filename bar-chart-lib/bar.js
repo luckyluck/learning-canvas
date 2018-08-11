@@ -152,8 +152,14 @@ BarChart.prototype.drawChart = function () {
     // Vertical axis
     chart.drawVerticalAxis();
 
+    // Vertical labels
+    chart.drawVerticalLabels();
+
     // Horizontal axis
     chart.drawHorizontalAxis();
+
+    // Horizontal labels
+    chart.drawHorizontalLabels();
 };
 
 BarChart.prototype.drawVerticalAxis = function () {
@@ -168,6 +174,29 @@ BarChart.prototype.drawVerticalAxis = function () {
     chart.context.stroke();
 };
 
+BarChart.prototype.drawVerticalLabels = function () {
+    // Base
+    const chart = this;
+
+    // Text specifications
+    const labelFont = chart.fontStyle + ' ' + chart.fontWeight + ' ' + chart.verticalFontSize + ' ' + chart.fontFamily;
+    chart.context.font = labelFont;
+    chart.context.textAlign = 'right';
+    chart.context.fontStyle = chart.fontColor;
+
+    // Scale values
+    const scaledVerticalLabelFreq = (chart.verticalAxisWidth / chart.verticalUpperBound) * chart.verticalLabelFreq;
+
+    // Draw labels
+    for (let i = 0; i <= chart.itemsNum; i++) {
+        const labelText = chart.verticalUpperBound - i * chart.verticalLabelFreq;
+        const verticalLabelX = chart.horizontalMargin - chart.horizontalMargin / chart.axisRatio;
+        const verticalLabelY = chart.verticalMargin + i * scaledVerticalLabelFreq;
+
+        chart.context.fillText(labelText, verticalLabelX, verticalLabelY);
+    }
+};
+
 BarChart.prototype.drawHorizontalAxis = function () {
     // Base
     const chart = this;
@@ -178,4 +207,24 @@ BarChart.prototype.drawHorizontalAxis = function () {
     chart.context.moveTo(chart.horizontalMargin, chart.height - chart.verticalMargin);
     chart.context.lineTo(chart.width - chart.horizontalMargin, chart.height - chart.verticalMargin);
     chart.context.stroke();
+};
+
+BarChart.prototype.drawHorizontalLabels = function () {
+    // Base
+    const chart = this;
+
+    // Text specifications
+    const labelFont = chart.fontStyle + ' ' + chart.fontWeight + ' ' + chart.verticalFontSize + ' ' + chart.fontFamily;
+    chart.context.font = labelFont;
+    chart.context.textAlign = 'center';
+    chart.context.textBaseline = 'top';
+    chart.context.fontStyle = chart.fontColor;
+
+    // Draw labels
+    for (let i = 0; i < chart.itemsNum; i++) {
+        const horizontalLabelX = chart.horizontalMargin + i * chart.horizontalLabelFreq + chart.horizontalLabelFreq / 2;
+        const horizontalLabelY = chart.height - chart.verticalMargin + chart.verticalMargin / chart.axisRatio;
+
+        chart.context.fillText(chart.labels[i], horizontalLabelX, horizontalLabelY);
+    }
 };
