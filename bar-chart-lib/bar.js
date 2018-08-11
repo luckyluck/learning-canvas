@@ -26,6 +26,9 @@ function BarChart(targetId, width, height, data) {
 
     // Pre-operations
     chart.performPreOperations();
+
+    // Draw chart
+    chart.drawChart();
 }
 
 BarChart.prototype.configureChart = function (targetId, width, height, data) {
@@ -54,12 +57,12 @@ BarChart.prototype.setChartParameters = function () {
     // Base
     const chart = this;
 
-    // Axe configurations
-    chart.axeRatio = 10; // in terms of percentage
-    chart.verticalMargin = (chart.height * chart.axeRatio) / 100;
-    chart.horizontalMargin = (chart.width * chart.axeRatio) / 100;
-    chart.axeColor = '#b1b1b1';
-    chart.axeWidth = 0.75;
+    // Axis configurations
+    chart.axisRatio = 10; // in terms of percentage
+    chart.verticalMargin = (chart.height * chart.axisRatio) / 100;
+    chart.horizontalMargin = (chart.width * chart.axisRatio) / 100;
+    chart.axisColor = '#b1b1b1';
+    chart.axisWidth = 0.75;
 
     // Label configurations
     chart.fontRatio = 3; // in terms of percentage
@@ -132,12 +135,47 @@ BarChart.prototype.prepareData = function () {
     chart.maxValue = Math.max.apply(null, chart.values);
     chart.minValue = Math.min.apply(null, chart.values);
 
-    // Axe specifications
-    chart.verticalAxeWidth = chart.height - 2 * chart.verticalMargin; // bottom and top margins
-    chart.horizontalAxeWidth = chart.height - 2 * chart.horizontalMargin; // left and right margins
+    // Axis specifications
+    chart.verticalAxisWidth = chart.height - 2 * chart.verticalMargin; // bottom and top margins
+    chart.horizontalAxisWidth = chart.height - 2 * chart.horizontalMargin; // left and right margins
 
     // Label specifications
     chart.verticalUpperBound = Math.ceil(chart.maxValue / 10) * 10;
     chart.verticalLabelFreq = chart.verticalUpperBound / chart.itemsNum;
-    chart.horizontalLabelFreq = chart.horizontalAxeWidth / chart.itemsNum;
+    chart.horizontalLabelFreq = chart.horizontalAxisWidth / chart.itemsNum;
+};
+
+BarChart.prototype.drawChart = function () {
+    // Base
+    const chart = this;
+
+    // Vertical axis
+    chart.drawVerticalAxis();
+
+    // Horizontal axis
+    chart.drawHorizontalAxis();
+};
+
+BarChart.prototype.drawVerticalAxis = function () {
+    // Base
+    const chart = this;
+
+    chart.context.beginPath();
+    chart.context.strokeStyle = chart.axisColor;
+    chart.context.lineWidth = chart.axisWidth;
+    chart.context.moveTo(chart.horizontalMargin, chart.verticalMargin);
+    chart.context.lineTo(chart.horizontalMargin, chart.height - chart.verticalMargin);
+    chart.context.stroke();
+};
+
+BarChart.prototype.drawHorizontalAxis = function () {
+    // Base
+    const chart = this;
+
+    chart.context.beginPath();
+    chart.context.strokeStyle = chart.axisColor;
+    chart.context.lineWidth = chart.axisWidth;
+    chart.context.moveTo(chart.horizontalMargin, chart.height - chart.verticalMargin);
+    chart.context.lineTo(chart.width - chart.horizontalMargin, chart.height - chart.verticalMargin);
+    chart.context.stroke();
 };
