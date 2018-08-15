@@ -7,4 +7,4 @@ Lightweight, configurable and simple bar chart library in JavaScript
 ## Description
 bar.js is a Canvas based simple JavaScript Bar Chart Library to provide a configurable, lightweight and dependency-free experience.
 
-![](https://github.com/luckyluck/learning-canvas/tree/master/bar-chart-lib/bar.png)
+![](https://github.com/luckyluck/learning-canvas/blob/master/bar-chart-lib/bar.png)
