@@ -166,6 +166,9 @@ BarChart.prototype.drawChart = function () {
 
     // Vertical guidelines
     chart.drawVerticalGuidelines();
+
+    // Bars
+    chart.drawBars();
 };
 
 BarChart.prototype.drawVerticalAxis = function () {
@@ -287,3 +290,44 @@ BarChart.prototype.drawVerticalGuidelines = function () {
         chart.context.stroke();
     }
 };
+
+BarChart.prototype.drawBars = function () {
+    // Base
+    const chart = this;
+
+
+    for (let i = 0; i < chart.itemsNum; i++) {
+        const color = chart.createRandomRGBColor();
+        const fillOpacity = '0.3';
+        const fillColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${fillOpacity})`;
+        const borderColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
+
+        chart.context.beginPath();
+
+        const barX = chart.horizontalMargin + i * chart.horizontalLabelFreq + chart.horizontalLabelFreq / chart.axisRatio;
+        const barY = chart.height - chart.verticalMargin;
+        const barWidth = chart.horizontalLabelFreq - 2 * chart.horizontalLabelFreq / chart.axisRatio;
+        const barHeight = -1 * chart.verticalAxisWidth * chart.values[i] / chart.maxValue;
+
+        chart.context.fillStyle = fillColor;
+        chart.context.strokeStyle = borderColor;
+        chart.context.rect(barX, barY, barWidth, barHeight);
+        chart.context.stroke();
+        chart.context.fill();
+    }
+};
+
+BarChart.prototype.createRandomRGBColor = function () {
+    return {
+        r: getRandomInt(0, 257),
+        g: getRandomInt(0, 257),
+        b: getRandomInt(0, 257)
+    };
+};
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+
+    return Math.floor(Math.random() * (max - min)) + min;
+}
