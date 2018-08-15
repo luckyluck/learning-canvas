@@ -1,10 +1,10 @@
 /**
  * bar.js
  * simple and elegant bar chart library
- * {date} - version
- * {url}
+ * 15.08.2018 - version 1.0
+ * https://github.com/luckyluck/learning-canvas/tree/master/bar-chart-lib
  *
- * Copyright 2018 {name}
+ * Copyright 2018 <ketov.alex.v@gmail.com>
  * Released under the MIT License
  * {license url}
  *
